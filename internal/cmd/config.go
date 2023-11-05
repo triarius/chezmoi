@@ -2462,7 +2462,8 @@ func (c *Config) targetRelPaths(
 			return nil, fmt.Errorf("%s: not managed", arg)
 		}
 		if options.mustBeInSourceState {
-			if _, ok := sourceStateEntry.(*chezmoi.SourceStateRemove); ok {
+			switch sourceStateEntry.(type) {
+			case nil, *chezmoi.SourceStateRemove:
 				return nil, fmt.Errorf("%s: not in source state", arg)
 			}
 		}
